@@ -16,6 +16,18 @@ spec:
       hosts:
         - grafana.iqbalhakim.live
         - argocd.iqbalhakim.live
+      tls:
+        httpsRedirect: true
+    - port:
+        number: 443
+        name: https
+        protocol: HTTPS
+      hosts:
+        - grafana.iqbalhakim.live
+        - argocd.iqbalhakim.live
+      tls:
+        mode: SIMPLE
+        credentialName: iqbalhakim-live-tls
 ---
 apiVersion: networking.istio.io/v1beta1
 kind: VirtualService
