@@ -83,6 +83,8 @@ metadata:
     "istio.io/dataplane-mode": "none"
   annotations:
     external-dns.alpha.kubernetes.io/hostname: grafana.iqbalhakim.live,argocd.iqbalhakim.live
+    tailscale.com/expose: "true"
+    tailscale.com/hostname: "iqbalhakim-ingress"
 spec:
   type: LoadBalancer
   ports:
