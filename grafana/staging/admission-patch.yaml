@@ -1,0 +1,16 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: kube-prometheus-stack-admission-patch
+  namespace: monitoring
+spec:
+  template:
+    spec:
+      containers:
+        - name: patch
+          args:
+            - patch
+            - --webhook-name=staging-kube-prometheus-stack-admission
+            - --namespace=monitoring
+            - --secret-name=staging-kube-prometheus-stack-admission
+            - --patch-failure-policy=
