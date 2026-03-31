@@ -15,7 +15,7 @@ terraform {
   }
 
   cloud {
-    organization = "your-hcp-org"
+    organization = "iqbal-hakim"
 
     workspaces {
       name = "doks-prod"
@@ -32,7 +32,7 @@ resource "digitalocean_kubernetes_cluster" "prod" {
 
   node_pool {
     name       = "prod-pool"
-    size       = "s-2vcpu-4gb" # $24/month
+    size       = "s-2vcpu-4gb" 
     node_count = 1
   }
 }

@@ -5,6 +5,7 @@ namespace: argocd
 
 resources:
   - ../base/
+  - app-of-apps.yaml
 
 patches:
   - path: argocd-config-patch.yaml
