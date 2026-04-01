@@ -14,8 +14,8 @@ spec:
         name: http
         protocol: HTTP
       hosts:
-        - grafana.iqbalhakim.live
-        - argocd.iqbalhakim.live
+        - grafana.iqbalhakim.ink
+        - argocd.iqbalhakim.ink
       tls:
         httpsRedirect: true
     - port:
@@ -23,8 +23,8 @@ spec:
         name: https
         protocol: HTTPS
       hosts:
-        - grafana.iqbalhakim.live
-        - argocd.iqbalhakim.live
+        - grafana.iqbalhakim.ink
+        - argocd.iqbalhakim.ink
       tls:
         mode: SIMPLE
         credentialName: iqbalhakim-live-tls
@@ -36,7 +36,7 @@ metadata:
   namespace: monitoring
 spec:
   hosts:
-    - grafana.iqbalhakim.live
+    - grafana.iqbalhakim.ink
   gateways:
     - istio-system/istio-ingress-gateway
   http:
@@ -53,7 +53,7 @@ metadata:
   namespace: argocd
 spec:
   hosts:
-    - argocd.iqbalhakim.live
+    - argocd.iqbalhakim.ink
   gateways:
     - istio-system/istio-ingress-gateway
   http:

@@ -3,4 +3,4 @@ kind: ConfigMap
 metadata:
   name: argocd-cm
 data:
-  url: https://argo.prod.iqbalhakim.live
+  url: https://argo.prod.iqbalhakim.ink

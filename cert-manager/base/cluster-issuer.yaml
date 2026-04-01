@@ -32,5 +32,5 @@ spec:
     name: letsencrypt-prod
     kind: ClusterIssuer
   dnsNames:
-    - argocd.iqbalhakim.live
-    - grafana.iqbalhakim.live
+    - argocd.iqbalhakim.ink
+    - grafana.iqbalhakim.ink

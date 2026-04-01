@@ -70,7 +70,7 @@ ingress:
   className: "istio"
   annotations: {}
   hosts:
-    - host: app.yourdomain.com
+    - host: app.iqbalhakim.ink
       paths:
         - path: /
           pathType: Prefix

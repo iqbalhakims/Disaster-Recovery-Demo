@@ -82,7 +82,7 @@ metadata:
     istio: ingress
     "istio.io/dataplane-mode": "none"
   annotations:
-    external-dns.alpha.kubernetes.io/hostname: grafana.iqbalhakim.live,argocd.iqbalhakim.live
+    external-dns.alpha.kubernetes.io/hostname: grafana.iqbalhakim.ink,argocd.iqbalhakim.ink
     tailscale.com/expose: "true"
     tailscale.com/hostname: "iqbalhakim-ingress"
 

@@ -6,7 +6,7 @@ image:
 ingress:
   enabled: true
   hosts:
-    - host: app.staging.yourdomain.com
+    - host: app.staging.iqbalhakim.ink
       paths:
         - path: /
           pathType: Prefix

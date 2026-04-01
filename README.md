@@ -89,10 +89,10 @@ autoscaling:
 
 | Service | Environment | Domain |
 |---|---|---|
-| ArgoCD | prod | `argocd.iqbalhakim.live` |
-| ArgoCD | staging | `argocd.staging.iqbalhakim.live` |
-| Grafana | prod | `grafana.iqbalhakim.live` |
-| Grafana | staging | `grafana.staging.iqbalhakim.live` |
+| ArgoCD | prod | `argocd.iqbalhakim.ink` |
+| ArgoCD | staging | `argocd.staging.iqbalhakim.ink` |
+| Grafana | prod | `grafana.iqbalhakim.ink` |
+| Grafana | staging | `grafana.staging.iqbalhakim.ink` |
 
 ## Secrets Management
 

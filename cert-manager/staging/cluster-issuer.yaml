@@ -32,5 +32,5 @@ spec:
     name: letsencrypt-staging
     kind: ClusterIssuer
   dnsNames:
-    - argo.staging.iqbalhakim.live
-    - grafana.staging.iqbalhakim.live
+    - argo.staging.iqbalhakim.ink
+    - grafana.staging.iqbalhakim.ink

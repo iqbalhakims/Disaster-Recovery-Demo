@@ -6,7 +6,7 @@ image:
 ingress:
   enabled: true
   hosts:
-    - host: api.yourdomain.com
+    - host: api.iqbalhakim.ink
       paths:
         - path: /
           pathType: Prefix

@@ -6,8 +6,8 @@ const errorRate = new Rate('errors');
 const backendLatency = new Trend('backend_latency', true);
 const frontendLatency = new Trend('frontend_latency', true);
 
-const FRONTEND_URL = __ENV.FRONTEND_URL || 'http://app.yourdomain.com';
-const BACKEND_URL = __ENV.BACKEND_URL || 'http://api.yourdomain.com';
+const FRONTEND_URL = __ENV.FRONTEND_URL || 'https://app.iqbalhakim.ink';
+const BACKEND_URL = __ENV.BACKEND_URL || 'https://api.iqbalhakim.ink';
 
 export const options = {
   scenarios: {

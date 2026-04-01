@@ -17,4 +17,4 @@ data:
     plugins = /var/lib/grafana/plugins
     provisioning = /etc/grafana/provisioning
     [server]
-    domain = grafana.prod.iqbalhakim.live
+    domain = grafana.prod.iqbalhakim.ink
