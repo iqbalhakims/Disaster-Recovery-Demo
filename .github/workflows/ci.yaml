@@ -6,6 +6,13 @@ on:
     paths:
       - 'apps/**'
 
+env:
+  REGISTRY: registry.digitalocean.com/coffman
+
+permissions:
+  id-token: write   # required for OIDC
+  contents: read
+
 jobs:
   backend:
     name: Build & Push Backend
@@ -13,11 +20,26 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Log in to Docker Hub
-        uses: docker/login-action@v3
+      - name: Configure AWS credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
         with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          role-to-assume: ${{ vars.AWS_ROLE_ARN }}
+          aws-region: ap-southeast-1
+
+      - name: Fetch DO token from AWS SM
+        uses: aws-actions/aws-secretsmanager-get-secrets@v2
+        with:
+          secret-ids: |
+            DO, coffman/digitalocean-token
+          parse-json-secrets: true
+
+      - name: Install doctl
+        uses: digitalocean/action-doctl@v2
+        with:
+          token: ${{ env.DO_TOKEN }}
+
+      - name: Log in to DOCR
+        run: doctl registry login --expiry-seconds 600
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -28,8 +50,8 @@ jobs:
           context: apps/backend
           push: true
           tags: |
-            coffman/backend:latest
-            coffman/backend:${{ github.sha }}
+            ${{ env.REGISTRY }}/backend:latest
+            ${{ env.REGISTRY }}/backend:${{ github.sha }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
@@ -39,11 +61,26 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Log in to Docker Hub
-        uses: docker/login-action@v3
+      - name: Configure AWS credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
         with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          role-to-assume: ${{ vars.AWS_ROLE_ARN }}
+          aws-region: ap-southeast-1
+
+      - name: Fetch DO token from AWS SM
+        uses: aws-actions/aws-secretsmanager-get-secrets@v2
+        with:
+          secret-ids: |
+            DO, coffman/digitalocean-token
+          parse-json-secrets: true
+
+      - name: Install doctl
+        uses: digitalocean/action-doctl@v2
+        with:
+          token: ${{ env.DO_TOKEN }}
+
+      - name: Log in to DOCR
+        run: doctl registry login --expiry-seconds 600
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -54,7 +91,7 @@ jobs:
           context: apps/frontend
           push: true
           tags: |
-            coffman/frontend:latest
-            coffman/frontend:${{ github.sha }}
+            ${{ env.REGISTRY }}/frontend:latest
+            ${{ env.REGISTRY }}/frontend:${{ github.sha }}
           cache-from: type=gha
           cache-to: type=gha,mode=max

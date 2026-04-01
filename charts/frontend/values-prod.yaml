@@ -1,7 +1,7 @@
 replicaCount: 2
 
 image:
-  tag: "prod-latest"
+  tag: "v1"
 
 ingress:
   enabled: true
