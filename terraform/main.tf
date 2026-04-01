@@ -32,7 +32,7 @@ provider "digitalocean" {}
 resource "digitalocean_kubernetes_cluster" "prod" {
   name    = "prod"
   region  = "sgp1"
-  version = "1.35.1-do.1"
+  version = "1.35.1-do.2"
 
   node_pool {
     name       = "prod-pool"
