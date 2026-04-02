@@ -18,6 +18,7 @@ spec:
         - argo.prod.iqbalhakim.ink
         - app.iqbalhakim.ink
         - api.iqbalhakim.ink
+        - iqbalhakim.ink
       tls:
         httpsRedirect: true
     - port:
@@ -29,6 +30,7 @@ spec:
         - argo.prod.iqbalhakim.ink
         - app.iqbalhakim.ink
         - api.iqbalhakim.ink
+        - iqbalhakim.ink
       tls:
         mode: SIMPLE
         credentialName: iqbalhakim-prod-tls

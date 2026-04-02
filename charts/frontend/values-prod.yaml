@@ -10,6 +10,10 @@ ingress:
       paths:
         - path: /
           pathType: Prefix
+    - host: iqbalhakim.ink
+      paths:
+        - path: /
+          pathType: Prefix
 
 autoscaling:
   enabled: true
