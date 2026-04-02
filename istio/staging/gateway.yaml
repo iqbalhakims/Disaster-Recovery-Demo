@@ -38,7 +38,7 @@ spec:
   hosts:
     - grafana.staging.iqbalhakim.ink
   gateways:
-    - istio-system/istio-ingress-gateway
+    - istio-system/staging-istio-ingress-gateway
   http:
     - route:
         - destination:
@@ -55,7 +55,7 @@ spec:
   hosts:
     - argo.staging.iqbalhakim.ink
   gateways:
-    - istio-system/istio-ingress-gateway
+    - istio-system/staging-istio-ingress-gateway
   http:
     - route:
         - destination:
