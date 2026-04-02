@@ -2306,6 +2306,7 @@ spec:
   imagePullPolicy: "IfNotPresent"
   version: v3.5.0
   externalUrl: http://kube-prometheus-stack-prometheus.monitoring:9090
+  enableRemoteWriteReceiver: true
   paused: false
   replicas: 1
   shards: 1
