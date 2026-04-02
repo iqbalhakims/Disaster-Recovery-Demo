@@ -1972,7 +1972,8 @@ spec:
           configMap:
             name: kube-prometheus-stack-grafana
         - name: storage
-          emptyDir: {}
+          persistentVolumeClaim:
+            claimName: grafana-storage
         - name: sc-dashboard-volume
           emptyDir: {}
         - name: sc-dashboard-provider
