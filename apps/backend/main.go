@@ -20,7 +20,14 @@ func main() {
 	})
 
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Set("Access-Control-Allow-Origin", "https://app.iqbalhakim.ink")
+		origin := r.Header.Get("Origin")
+		allowed := map[string]bool{
+			"https://app.iqbalhakim.ink": true,
+			"https://iqbalhakim.ink":     true,
+		}
+		if allowed[origin] {
+			w.Header().Set("Access-Control-Allow-Origin", origin)
+		}
 		w.Header().Set("Access-Control-Allow-Methods", "GET, OPTIONS")
 		if r.Method == http.MethodOptions {
 			w.WriteHeader(http.StatusNoContent)
