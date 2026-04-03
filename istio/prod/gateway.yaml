@@ -16,6 +16,7 @@ spec:
       hosts:
         - grafana.prod.iqbalhakim.ink
         - argo.prod.iqbalhakim.ink
+        - rollouts.prod.iqbalhakim.ink
         - prometheus.prod.iqbalhakim.ink
         - app.iqbalhakim.ink
         - api.iqbalhakim.ink
@@ -29,6 +30,7 @@ spec:
       hosts:
         - grafana.prod.iqbalhakim.ink
         - argo.prod.iqbalhakim.ink
+        - rollouts.prod.iqbalhakim.ink
         - prometheus.prod.iqbalhakim.ink
         - app.iqbalhakim.ink
         - api.iqbalhakim.ink
@@ -36,6 +38,23 @@ spec:
       tls:
         mode: SIMPLE
         credentialName: iqbalhakim-prod-tls
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: argo-rollouts-dashboard
+  namespace: argo-rollouts
+spec:
+  hosts:
+    - rollouts.prod.iqbalhakim.ink
+  gateways:
+    - istio-system/istio-ingress-gateway
+  http:
+    - route:
+        - destination:
+            host: argo-rollouts-dashboard.argo-rollouts.svc.cluster.local
+            port:
+              number: 3100
 ---
 apiVersion: networking.istio.io/v1beta1
 kind: VirtualService
