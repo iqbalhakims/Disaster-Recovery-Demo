@@ -16,6 +16,7 @@ spec:
       hosts:
         - grafana.prod.iqbalhakim.ink
         - argo.prod.iqbalhakim.ink
+        - prometheus.prod.iqbalhakim.ink
         - app.iqbalhakim.ink
         - api.iqbalhakim.ink
         - iqbalhakim.ink
@@ -28,6 +29,7 @@ spec:
       hosts:
         - grafana.prod.iqbalhakim.ink
         - argo.prod.iqbalhakim.ink
+        - prometheus.prod.iqbalhakim.ink
         - app.iqbalhakim.ink
         - api.iqbalhakim.ink
         - iqbalhakim.ink

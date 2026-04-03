@@ -6,3 +6,5 @@ resources:
   - istiod.yaml
   - ingress.yaml
   - gateway.yaml
+  - servicemonitor.yaml
+  - podmonitor.yaml
