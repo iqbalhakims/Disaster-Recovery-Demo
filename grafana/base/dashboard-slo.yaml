@@ -40,7 +40,7 @@ data:
           },
           "targets": [
             {
-              "expr": "api:error_rate_5m",
+              "expr": "api:error_rate_5m or vector(0)",
               "legendFormat": "Error Rate"
             }
           ]
@@ -122,12 +122,8 @@ data:
           },
           "targets": [
             {
-              "expr": "ALERTS{alertname=\"FastBurnSLO\",alertstate=\"firing\"}",
+              "expr": "ALERTS{alertname=\"FastBurnSLO\",alertstate=\"firing\"} or vector(0)",
               "legendFormat": "FastBurn"
-            },
-            {
-              "expr": "ALERTS{alertname=\"SlowBurnSLO\",alertstate=\"firing\"}",
-              "legendFormat": "SlowBurn"
             }
           ]
         },
@@ -235,6 +231,113 @@ data:
             {
               "expr": "api:error_rate_5m",
               "legendFormat": "Error Rate"
+            }
+          ]
+        },
+        {
+          "id": 8,
+          "title": "Cluster Health",
+          "type": "row",
+          "gridPos": { "x": 0, "y": 20, "w": 24, "h": 1 },
+          "collapsed": false
+        },
+        {
+          "id": 9,
+          "title": "Node Ready Status",
+          "type": "stat",
+          "gridPos": { "x": 0, "y": 21, "w": 6, "h": 4 },
+          "options": {
+            "reduceOptions": { "calcs": ["lastNotNull"] },
+            "colorMode": "background",
+            "textMode": "value_and_name"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "unit": "short",
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  { "color": "red", "value": null },
+                  { "color": "green", "value": 1 }
+                ]
+              }
+            }
+          },
+          "targets": [
+            {
+              "expr": "sum(kube_node_status_condition{condition=\"Ready\",status=\"true\"})",
+              "legendFormat": "Ready"
+            },
+            {
+              "expr": "sum(kube_node_status_condition{condition=\"Ready\",status=\"false\"})",
+              "legendFormat": "Not Ready"
+            }
+          ]
+        },
+        {
+          "id": 10,
+          "title": "Pod Restart Count",
+          "type": "timeseries",
+          "gridPos": { "x": 6, "y": 21, "w": 18, "h": 8 },
+          "fieldConfig": {
+            "defaults": {
+              "unit": "short",
+              "custom": { "lineWidth": 2 },
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  { "color": "green", "value": null },
+                  { "color": "yellow", "value": 5 },
+                  { "color": "red", "value": 10 }
+                ]
+              }
+            }
+          },
+          "options": {
+            "tooltip": { "mode": "multi" },
+            "legend": { "displayMode": "list", "placement": "bottom" }
+          },
+          "targets": [
+            {
+              "expr": "sum by (namespace, pod) (increase(kube_pod_container_status_restarts_total[1h])) > 0",
+              "legendFormat": "{{namespace}}/{{pod}}"
+            }
+          ]
+        },
+        {
+          "id": 11,
+          "title": "App Health",
+          "type": "row",
+          "gridPos": { "x": 0, "y": 29, "w": 24, "h": 1 },
+          "collapsed": false
+        },
+        {
+          "id": 12,
+          "title": "5xx Error Rate",
+          "type": "timeseries",
+          "gridPos": { "x": 0, "y": 30, "w": 24, "h": 8 },
+          "fieldConfig": {
+            "defaults": {
+              "unit": "percentunit",
+              "custom": { "lineWidth": 2 },
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  { "color": "green", "value": null },
+                  { "color": "yellow", "value": 0.01 },
+                  { "color": "red", "value": 0.05 }
+                ]
+              }
+            }
+          },
+          "options": {
+            "tooltip": { "mode": "multi" },
+            "legend": { "displayMode": "list", "placement": "bottom" }
+          },
+          "targets": [
+            {
+              "expr": "sum by (namespace) (rate(istio_requests_total{response_code=~\"5..\"}[5m])) / sum by (namespace) (rate(istio_requests_total[5m]))",
+              "legendFormat": "{{namespace}}"
             }
           ]
         }
