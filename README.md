@@ -2,6 +2,10 @@
 
 Kubernetes infrastructure setup running on DigitalOcean Kubernetes (DOKS).
 
+## Demo
+
+[![Watch the demo on YouTube](https://img.shields.io/badge/YouTube-Demo-red?logo=youtube)](https://www.youtube.com/watch?v=1hWl0pyX6l4)
+
 ## Table of Contents
 
 - [Deployment Guide](#deployment-guide)
@@ -771,3 +775,7 @@ kubectl get clustersecretstore aws-secrets-manager
 kubectl get externalsecret -n monitoring
 kubectl get externalsecret -n argocd
 ```
+
+drain node
+ kubectl drain prod-pool-08ae8 --ignore-daemonsets --delete-emptydir-data
+
