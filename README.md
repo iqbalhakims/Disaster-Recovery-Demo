@@ -180,6 +180,81 @@ Access ArgoCD at `https://argo.prod.iqbalhakim.ink`.
 | Node size | s-2vcpu-4gb (1 node) |
 | Region | ap-southeast-1 |
 
+## Pod Distribution
+
+Current pod layout across nodes (`kubectl get pods -A -o wide`):
+
+```
+NAMESPACE          NAME                                                        READY   STATUS              RESTARTS   AGE     IP             NODE
+apps               backend-68976485c4-s9tvm                                    1/1     Running             0          27h     10.105.0.57    prod-pool-ddnz4
+apps               backend-6f78b55c9b-8d6fp                                    1/1     Running             0          116m    10.105.0.139   prod-pool-08ae8
+apps               backend-6f78b55c9b-nr2x2                                    0/1     Pending             0          116m    <none>         <none>
+apps               frontend-65d847d466-6hm5l                                   1/1     Running             0          27h     10.105.0.65    prod-pool-ddnz4
+apps               frontend-d987c7d6d-9gddl                                    0/1     Pending             0          118m    <none>         <none>
+apps               frontend-d987c7d6d-xcd4b                                    1/1     Running             0          118m    10.105.0.162   prod-pool-08ae8
+argo-rollouts      argo-rollouts-67cbbf7967-gkbvh                              1/1     Running             0          147m    10.105.0.118   prod-pool-ddnz4
+argo-rollouts      argo-rollouts-67cbbf7967-kgf6f                              1/1     Running             0          147m    10.105.0.98    prod-pool-ddnz4
+argo-rollouts      argo-rollouts-dashboard-7bb48748b5-kzmjv                    1/1     Running             0          147m    10.105.0.70    prod-pool-ddnz4
+argocd             argocd-application-controller-0                             1/1     Running             0          6m19s   10.105.0.191   prod-pool-08ae8
+argocd             argocd-application-controller-1                             1/1     Running             0          103s    10.105.0.77    prod-pool-ddnz4
+argocd             argocd-applicationset-controller-f6f4795f5-fq8gn            1/1     Running             0          147m    10.105.0.32    prod-pool-ddnz4
+argocd             argocd-dex-server-666d6cbfff-fdgjj                          1/1     Running             0          147m    10.105.0.40    prod-pool-ddnz4
+argocd             argocd-image-updater-controller-76ff846d54-dmxhh            1/1     Running             0          12m     10.105.0.134   prod-pool-08ae8
+argocd             argocd-image-updater-controller-76ff846d54-jkq6s            1/1     Running             0          11m     10.105.0.73    prod-pool-ddnz4
+argocd             argocd-notifications-controller-7dc495988d-j82jl            1/1     Running             0          147m    10.105.0.69    prod-pool-ddnz4
+argocd             argocd-redis-68884c8789-tdl87                               1/1     Running             0          147m    10.105.0.66    prod-pool-ddnz4
+argocd             argocd-repo-server-7fccd59fb8-2vb65                         1/1     Running             0          114m    10.105.0.229   prod-pool-08ae8
+argocd             argocd-repo-server-7fccd59fb8-9r6vz                         1/1     Running             0          112m    10.105.0.11    prod-pool-ddnz4
+argocd             argocd-server-7b4686b8f-6dkp8                               1/1     Running             0          114m    10.105.0.194   prod-pool-08ae8
+argocd             argocd-server-7b4686b8f-tmrvd                               1/1     Running             0          112m    10.105.0.72    prod-pool-ddnz4
+cert-manager       cert-manager-7fb476d67b-9lgj8                               1/1     Running             0          12m     10.105.0.29    prod-pool-ddnz4
+cert-manager       cert-manager-7fb476d67b-mg7jx                               1/1     Running             0          12m     10.105.0.219   prod-pool-08ae8
+cert-manager       cert-manager-cainjector-5f9965d878-2r4fv                    1/1     Running             0          12m     10.105.0.181   prod-pool-08ae8
+cert-manager       cert-manager-cainjector-5f9965d878-qsnsz                    1/1     Running             0          12m     10.105.0.7     prod-pool-ddnz4
+cert-manager       cert-manager-webhook-5466f7c8bf-6glhd                       1/1     Running             0          12m     10.105.0.52    prod-pool-ddnz4
+cert-manager       cert-manager-webhook-5466f7c8bf-t4scc                       1/1     Running             0          12m     10.105.0.248   prod-pool-08ae8
+external-dns       external-dns-84df76657d-d59fr                               1/1     Running             0          13m     10.105.0.136   prod-pool-08ae8
+external-dns       external-dns-84df76657d-kgdfz                               1/1     Running             0          12m     10.105.0.2     prod-pool-ddnz4
+external-secrets   external-secrets-55b86fdffc-4j2s4                           1/1     Running             0          10m     10.105.0.195   prod-pool-08ae8
+external-secrets   external-secrets-55b86fdffc-rjwsq                           1/1     Running             0          10m     10.105.0.19    prod-pool-ddnz4
+external-secrets   external-secrets-cert-controller-fcccd6bd9-54f9p            1/1     Running             0          9m51s   10.105.0.14    prod-pool-ddnz4
+external-secrets   external-secrets-cert-controller-fcccd6bd9-tm2dk            1/1     Running             0          10m     10.105.0.170   prod-pool-08ae8
+external-secrets   external-secrets-webhook-84c776f4f-2dvn5                    1/1     Running             0          9m51s   10.105.0.114   prod-pool-ddnz4
+external-secrets   external-secrets-webhook-84c776f4f-xzj92                    1/1     Running             0          10m     10.105.0.197   prod-pool-08ae8
+istio-system       istio-ingress-7d487fcc8d-rtfs5                              1/1     Running             0          147m    10.105.0.47    prod-pool-ddnz4
+istio-system       istio-ingress-7d487fcc8d-rxmdq                              1/1     Running             0          146m    10.105.0.5     prod-pool-ddnz4
+istio-system       istiod-7469ffb9b-cf6vw                                      1/1     Running             0          3m31s   10.105.0.209   prod-pool-08ae8
+istio-system       istiod-7469ffb9b-r4szx                                      1/1     Running             0          112m    10.105.0.6     prod-pool-ddnz4
+kube-system        cilium-l8dw9                                                1/1     Running             0          2d7h    10.104.0.2     prod-pool-ddnz4
+kube-system        cilium-p94p5                                                1/1     Running             0          5h53m   10.104.0.3     prod-pool-08ae8
+kube-system        coredns-b59ff8687-4ckvc                                     1/1     Running             0          147m    10.105.0.88    prod-pool-ddnz4
+kube-system        coredns-b59ff8687-ddmx9                                     1/1     Running             0          147m    10.105.0.31    prod-pool-ddnz4
+kube-system        cpc-bridge-proxy-ebpf-6qmfc                                 1/1     Running             0          5h53m   10.104.0.3     prod-pool-08ae8
+kube-system        cpc-bridge-proxy-ebpf-jqzgr                                 1/1     Running             0          2d7h    10.104.0.2     prod-pool-ddnz4
+kube-system        csi-do-node-ht22h                                           2/2     Running             0          5h53m   10.104.0.3     prod-pool-08ae8
+kube-system        csi-do-node-jmktt                                           2/2     Running             0          2d7h    10.104.0.2     prod-pool-ddnz4
+kube-system        do-node-agent-c7bp9                                         1/1     Running             0          5h53m   10.104.0.3     prod-pool-08ae8
+kube-system        do-node-agent-zhj88                                         1/1     Running             0          2d7h    10.104.0.2     prod-pool-ddnz4
+kube-system        doks-telemetry-config-reloader-ltsmq                        1/1     Running             0          5h53m   10.104.0.3     prod-pool-08ae8
+kube-system        doks-telemetry-config-reloader-wdr7c                        1/1     Running             0          2d7h    10.104.0.2     prod-pool-ddnz4
+kube-system        hubble-relay-586f444678-92g4v                               1/1     Running             0          147m    10.105.0.104   prod-pool-ddnz4
+kube-system        hubble-ui-6b7f58bdd5-kmffh                                  2/2     Running             0          147m    10.105.0.89    prod-pool-ddnz4
+kube-system        konnectivity-agent-spw7w                                    1/1     Running             0          2d7h    10.105.0.51    prod-pool-ddnz4
+kube-system        konnectivity-agent-wspjr                                    1/1     Running             0          5h53m   10.105.0.228   prod-pool-08ae8
+kube-system        metrics-server-8699ccc578-tjvwz                             1/1     Running             0          147m    10.105.0.48    prod-pool-ddnz4
+monitoring         alertmanager-kube-prometheus-stack-alertmanager-0           2/2     Running             0          147m    10.105.0.53    prod-pool-ddnz4
+monitoring         kube-prometheus-stack-grafana-776c457cbf-jt46w              3/3     Running             0          159m    10.105.0.44    prod-pool-ddnz4
+monitoring         kube-prometheus-stack-grafana-776c457cbf-srqln              3/3     Running             0          147m    10.105.0.129   prod-pool-08ae8
+monitoring         kube-prometheus-stack-kube-state-metrics-6dcdc64496-rdmqz   1/1     Running             0          147m    10.105.0.46    prod-pool-ddnz4
+monitoring         kube-prometheus-stack-operator-677f9ffd7c-l4n42             1/1     Running             0          147m    10.105.0.110   prod-pool-ddnz4
+monitoring         kube-prometheus-stack-prometheus-node-exporter-dlf4x        1/1     Running             0          43h     10.104.0.2     prod-pool-ddnz4
+monitoring         kube-prometheus-stack-prometheus-node-exporter-ngxqv        1/1     Running             0          5h53m   10.104.0.3     prod-pool-08ae8
+monitoring         prometheus-kube-prometheus-stack-prometheus-0               2/2     Running             0          147m    10.105.0.71    prod-pool-ddnz4
+tailscale          operator-7f6b6564ff-mr2lt                                   0/1     ContainerCreating   0          147m    <none>         prod-pool-ddnz4
+```
+
+> Nodes: `prod-pool-ddnz4` (original) and `prod-pool-08ae8` (added for HA). Some pods are `Pending` due to topology spread / anti-affinity rules with only 2 nodes available.
+
 ## Resource Usage
 
 Node capacity: **2 vCPU / ~3GB allocatable RAM**
