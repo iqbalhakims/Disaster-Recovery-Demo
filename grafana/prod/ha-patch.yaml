@@ -15,6 +15,11 @@ spec:
         - name: storage
           emptyDir: {}
           persistentVolumeClaim: null
+      containers:
+        - name: grafana
+          envFrom:
+            - secretRef:
+                name: kube-prometheus-stack-grafana
       affinity:
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
