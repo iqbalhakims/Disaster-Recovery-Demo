@@ -4,24 +4,28 @@ metadata:
   name: kube-prometheus-stack-grafana
   namespace: monitoring
 spec:
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 0
+      maxUnavailable: 1
   template:
     spec:
       volumes:
         - name: storage
           emptyDir: {}
+          persistentVolumeClaim: null
       affinity:
         podAntiAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-            - weight: 100
-              podAffinityTerm:
-                labelSelector:
-                  matchLabels:
-                    app.kubernetes.io/name: grafana
-                topologyKey: kubernetes.io/hostname
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchLabels:
+                  app.kubernetes.io/name: grafana
+              topologyKey: kubernetes.io/hostname
       topologySpreadConstraints:
         - maxSkew: 1
           topologyKey: kubernetes.io/hostname
-          whenUnsatisfiable: ScheduleAnyway
+          whenUnsatisfiable: DoNotSchedule
           labelSelector:
             matchLabels:
               app.kubernetes.io/name: grafana
