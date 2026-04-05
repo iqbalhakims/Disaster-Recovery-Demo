@@ -8,4 +8,5 @@ spec:
     spec:
       volumes:
         - name: storage
+          persistentVolumeClaim: null
           emptyDir: {}
