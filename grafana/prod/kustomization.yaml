@@ -10,3 +10,6 @@ patches:
   - path: grafana-config-patch.yaml
   - path: replicas-patch.yaml
   - path: ha-patch.yaml
+    target:
+      kind: Deployment
+      name: kube-prometheus-stack-grafana
