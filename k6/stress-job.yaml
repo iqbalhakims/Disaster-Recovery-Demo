@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: k6-script
+  name: k6-stress-script
   namespace: k6
 data:
-  test.js: |
+  stress.js: |
     import http from 'k6/http';
     import { check, sleep } from 'k6';
     import { Rate, Trend } from 'k6/metrics';
@@ -18,32 +18,25 @@ data:
 
     export const options = {
       scenarios: {
-        smoke: {
-          executor: 'constant-vus',
-          vus: 2,
-          duration: '30s',
-          tags: { scenario: 'smoke' },
-        },
-        load: {
+        stress: {
           executor: 'ramping-vus',
           startVUs: 0,
           stages: [
-            { duration: '1m', target: 10 },
-            { duration: '2m', target: 50 },
-            { duration: '2m', target: 100 },
-            { duration: '3m', target: 100 },
-            { duration: '1m', target: 0 },
+            { duration: '1m', target: 500 },    // ramp to 500
+            { duration: '1m', target: 1000 },   // ramp to 1000
+            { duration: '1m', target: 1500 },   // ramp to 1500
+            { duration: '1m', target: 2000 },   // ramp to 2000
+            { duration: '1m', target: 2500 },   // ramp to 2500 — expect failures here
+            { duration: '2m', target: 2500 },   // hold at peak
+            { duration: '1m', target: 0 },      // ramp down
           ],
-          startTime: '30s',
-          tags: { scenario: 'load' },
+          tags: { scenario: 'stress' },
         },
       },
       thresholds: {
-        errors: ['rate<0.01'],
-        backend_latency: ['p(95)<500'],
-        frontend_latency: ['p(95)<500'],
-        http_req_failed: ['rate<0.01'],
-        http_req_duration: ['p(95)<500'],
+        // intentionally loose — we want to observe failure, not abort early
+        errors: ['rate<0.5'],
+        http_req_failed: ['rate<0.5'],
       },
     };
 
@@ -52,7 +45,6 @@ data:
       frontendLatency.add(frontendRes.timings.duration);
       const frontendOk = check(frontendRes, {
         'frontend status 200': (r) => r.status === 200,
-        'frontend response time < 500ms': (r) => r.timings.duration < 500,
       });
       errorRate.add(!frontendOk);
 
@@ -62,7 +54,6 @@ data:
       backendLatency.add(backendRes.timings.duration);
       const backendOk = check(backendRes, {
         'backend status 200': (r) => r.status === 200,
-        'backend response time < 500ms': (r) => r.timings.duration < 500,
       });
       errorRate.add(!backendOk);
 
@@ -72,7 +63,7 @@ data:
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: k6-load-test
+  name: k6-stress-test
   namespace: k6
 spec:
   ttlSecondsAfterFinished: 3600
@@ -86,7 +77,7 @@ spec:
             - run
             - --out
             - experimental-prometheus-rw
-            - /scripts/test.js
+            - /scripts/stress.js
           env:
             - name: K6_PROMETHEUS_RW_SERVER_URL
               value: http://kube-prometheus-stack-prometheus.monitoring:9090/api/v1/write
@@ -95,9 +86,9 @@ spec:
             - name: K6_PROMETHEUS_RW_TREND_STATS
               value: "p(50),p(95),p(99)"
           volumeMounts:
-            - name: k6-script
+            - name: k6-stress-script
               mountPath: /scripts
       volumes:
-        - name: k6-script
+        - name: k6-stress-script
           configMap:
-            name: k6-script
+            name: k6-stress-script
