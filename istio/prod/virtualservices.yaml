@@ -54,6 +54,23 @@ spec:
 apiVersion: networking.istio.io/v1beta1
 kind: VirtualService
 metadata:
+  name: litmuschaos
+  namespace: litmus
+spec:
+  hosts:
+    - litmus.prod.iqbalhakim.ink
+  gateways:
+    - istio-system/istio-ingress-gateway
+  http:
+    - route:
+        - destination:
+            host: litmus-frontend-service.litmus.svc.cluster.local
+            port:
+              number: 9091
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
   name: prometheus
   namespace: monitoring
 spec:

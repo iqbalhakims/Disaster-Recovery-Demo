@@ -18,6 +18,7 @@ spec:
         - argo.prod.iqbalhakim.ink
         - rollouts.prod.iqbalhakim.ink
         - prometheus.prod.iqbalhakim.ink
+        - litmus.prod.iqbalhakim.ink
         - app.iqbalhakim.ink
         - api.iqbalhakim.ink
         - iqbalhakim.ink
@@ -32,6 +33,7 @@ spec:
         - argo.prod.iqbalhakim.ink
         - rollouts.prod.iqbalhakim.ink
         - prometheus.prod.iqbalhakim.ink
+        - litmus.prod.iqbalhakim.ink
         - app.iqbalhakim.ink
         - api.iqbalhakim.ink
         - iqbalhakim.ink
